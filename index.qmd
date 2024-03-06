@@ -12,7 +12,3 @@ title-block-banner: true
 ---
 
 Bienvenue
-
-git\@github.com:mariekrh/my_blog.git
-
-Test

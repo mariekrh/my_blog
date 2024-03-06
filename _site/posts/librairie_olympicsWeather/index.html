@@ -1,0 +1,4147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marie Kerhoas">
+<meta name="dcterms.date" content="2024-03-03">
+
+<title>my_blog - Librairie olympicsWeather</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">my_blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Librairie olympicsWeather</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">package</div>
+                <div class="quarto-category">météo</div>
+                <div class="quarto-category">JO</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Marie Kerhoas </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 3, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="librairie-olympicsweather" class="level2">
+<h2 class="anchored" data-anchor-id="librairie-olympicsweather">Librairie olympicsWeather</h2>
+<section id="présentation-du-package" class="level3">
+<h3 class="anchored" data-anchor-id="présentation-du-package">Présentation du package</h3>
+<p>Le package olympicsWeather a pour objectif d’informer sur les prévisions météo des sites olympiques. La fonction get_forecast comprise à l’intérieur de cette librairie vous permettra de connaître les prévisions, relatives aux températures et à la pluie estimées, à partir d’une adresse ou de coordonnées gps. Ces dernières font référence à des sites olympiques.</p>
+</section>
+<section id="notice-dinstallation" class="level3">
+<h3 class="anchored" data-anchor-id="notice-dinstallation">Notice d’installation</h3>
+<p>Actuellement, la librairie olympicsWeather est stockée sur un dépôt GitHub, aussi afin de l’utiliser, il est nécessaire de l’importer et de l’installer dans votre environnement R. Voici donc les étapes à suivre sur R Studio afin d’y parvenir. Dans un premier temps, il est nécessaire d’avoir installé la librairie “remotes” depuis le CRAN. La seconde étape consiste à utiliser la fonction install_github de “remotes”. Elle permet d’installer la librairie olympisWeather depuis le dépôt GitHub sur votre environnement R. Désormais, vous pouvez appeler ce package et l’utiliser à votre guise.</p>
+<p>Voici le code à exécuter pour parvenir à cet objectif :</p>
+<p>Etape 1 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Etape 2 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"mariekrh/olympicsWeather"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Etape 3 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olympicsWeather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exemples" class="level3">
+<h3 class="anchored" data-anchor-id="exemples">Exemples</h3>
+<p>Quelles sont les prévisions météo à 7 jours pour les lieux suivants ?</p>
+<ul>
+<li>Stade de France</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SdF <span class="ot">&lt;-</span> <span class="fu">get_forecast</span>(<span class="st">"stade de France"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(SdF<span class="sc">$</span>graphs[[<span class="dv">1</span>]],SdF<span class="sc">$</span>graphs[[<span class="dv">2</span>]],SdF<span class="sc">$</span>graphs[[<span class="dv">3</span>]],<span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Les données météo chiffrées du Stade de France
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SdF<span class="sc">$</span>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 31%">
+<col style="width: 13%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">date_heure</th>
+<th style="text-align: right;">temperature_celsius</th>
+<th style="text-align: right;">temperature_ressentie_celsius</th>
+<th style="text-align: right;">chance_pluie</th>
+<th style="text-align: right;">quantite_pluie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T00:00</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T01:00</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T02:00</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T03:00</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T04:00</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T05:00</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T06:00</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T07:00</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T08:00</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T09:00</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T10:00</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T11:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T12:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T13:00</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T14:00</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T15:00</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T16:00</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T17:00</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T18:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T19:00</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T20:00</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T21:00</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T22:00</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T23:00</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T00:00</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T01:00</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T02:00</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T03:00</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T04:00</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T05:00</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">-0.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T06:00</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">-0.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T07:00</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T08:00</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T09:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T10:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T11:00</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T12:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T13:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T14:00</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T15:00</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T16:00</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T17:00</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T18:00</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T19:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T20:00</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T21:00</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T22:00</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T23:00</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T00:00</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T01:00</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T02:00</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T03:00</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T04:00</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">-0.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T05:00</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T06:00</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">-0.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T07:00</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">-0.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T08:00</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T09:00</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T10:00</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T11:00</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T12:00</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T13:00</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T14:00</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T15:00</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T16:00</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T17:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T18:00</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T19:00</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T20:00</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T21:00</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T22:00</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T23:00</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T00:00</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T01:00</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T02:00</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T03:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T04:00</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T05:00</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T06:00</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T07:00</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T08:00</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T09:00</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T10:00</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T11:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T12:00</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T13:00</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T14:00</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T15:00</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T16:00</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T17:00</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T18:00</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T19:00</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T20:00</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T21:00</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T22:00</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T23:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T00:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T01:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T02:00</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T03:00</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T04:00</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T05:00</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T06:00</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T07:00</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T08:00</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T09:00</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T10:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T11:00</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T12:00</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T13:00</td>
+<td style="text-align: right;">12.6</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T14:00</td>
+<td style="text-align: right;">12.6</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T15:00</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T16:00</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T17:00</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T18:00</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T19:00</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T20:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T21:00</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T22:00</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T23:00</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T00:00</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T01:00</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T02:00</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T03:00</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T04:00</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T05:00</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T06:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T07:00</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T08:00</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T09:00</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T10:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T11:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T12:00</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T13:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T14:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T15:00</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T16:00</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T17:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T18:00</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T19:00</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T20:00</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T21:00</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T22:00</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T23:00</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T00:00</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T01:00</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T02:00</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T03:00</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T04:00</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T05:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T06:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T07:00</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T08:00</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T09:00</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T10:00</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T11:00</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T12:00</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T13:00</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T14:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T15:00</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T16:00</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T17:00</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T18:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T19:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T20:00</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T21:00</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T22:00</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T23:00</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Tahiti</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Tah <span class="ot">&lt;-</span> <span class="fu">get_forecast</span>(<span class="st">"Tahiti"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(Tah<span class="sc">$</span>graphs[[<span class="dv">1</span>]],Tah<span class="sc">$</span>graphs[[<span class="dv">2</span>]],Tah<span class="sc">$</span>graphs[[<span class="dv">3</span>]], <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Les données météo chiffrées de Tahiti
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Tah<span class="sc">$</span>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 31%">
+<col style="width: 13%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">date_heure</th>
+<th style="text-align: right;">temperature_celsius</th>
+<th style="text-align: right;">temperature_ressentie_celsius</th>
+<th style="text-align: right;">chance_pluie</th>
+<th style="text-align: right;">quantite_pluie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T00:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T01:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T02:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T03:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T04:00</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T05:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T06:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T07:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T08:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T09:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T10:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T11:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T12:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T13:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T14:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T15:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T16:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T17:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T18:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T19:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T20:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T21:00</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T22:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T23:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T00:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T01:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T02:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T03:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T04:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T05:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T06:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T07:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T08:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T09:00</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T10:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T11:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T12:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T13:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T14:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T15:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T16:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T17:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T18:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T19:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T20:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T21:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T22:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">20.5</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T23:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">20.1</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T00:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T01:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T02:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T03:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T04:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T05:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T06:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T07:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T08:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T09:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T10:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T11:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T12:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T13:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T14:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T15:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T16:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T17:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T18:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T19:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T20:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T21:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T22:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T23:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T00:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T01:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T02:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T03:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T04:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T05:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T06:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T07:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T08:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T09:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T10:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T11:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T12:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T13:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T14:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T15:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T16:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T17:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T18:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T19:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T20:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T21:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T22:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T23:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T00:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T01:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T02:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T03:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T04:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T05:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T06:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T07:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T08:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T09:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T10:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T11:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T12:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T13:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T14:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T15:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T16:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T17:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T18:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T19:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T20:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T21:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T22:00</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T23:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T00:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T01:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T02:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T03:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T04:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T05:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T06:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T07:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T08:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T09:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T10:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T11:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T12:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T13:00</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T14:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T15:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T16:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T17:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T18:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T19:00</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T20:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T21:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T22:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T23:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T00:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">20.5</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T01:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T02:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T03:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T04:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T05:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T06:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T07:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T08:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T09:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T10:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T11:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T12:00</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T13:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T14:00</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T15:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T16:00</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T17:00</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T18:00</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T19:00</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T20:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T21:00</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T22:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T23:00</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">21.2</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Les coordonnées GPS : 43.276703,5.334791</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>coord <span class="ot">&lt;-</span> <span class="fu">get_forecast</span>(<span class="fu">c</span>(<span class="fl">43.276703</span>,<span class="fl">5.334791</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(coord<span class="sc">$</span>graphs[[<span class="dv">1</span>]],coord<span class="sc">$</span>graphs[[<span class="dv">2</span>]],coord<span class="sc">$</span>graphs[[<span class="dv">3</span>]], <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Les données météo chiffrées des coordonnées : 43.276703,5.334791
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coord<span class="sc">$</span>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 31%">
+<col style="width: 13%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">date_heure</th>
+<th style="text-align: right;">temperature_celsius</th>
+<th style="text-align: right;">temperature_ressentie_celsius</th>
+<th style="text-align: right;">chance_pluie</th>
+<th style="text-align: right;">quantite_pluie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T00:00</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T01:00</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T02:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T03:00</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T04:00</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T05:00</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T06:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T07:00</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T08:00</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T09:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T10:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T11:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T12:00</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T13:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T14:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T15:00</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T16:00</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T17:00</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T18:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T19:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T20:00</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T21:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-06T22:00</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-06T23:00</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T00:00</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T01:00</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T02:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T03:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T04:00</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T05:00</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T06:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T07:00</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T08:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T09:00</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T10:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T11:00</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T12:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T13:00</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T14:00</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T15:00</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T16:00</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T17:00</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T18:00</td>
+<td style="text-align: right;">12.6</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T19:00</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T20:00</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T21:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-07T22:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-07T23:00</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T00:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T01:00</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T02:00</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T03:00</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T04:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T05:00</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T06:00</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T07:00</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T08:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T09:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T10:00</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T11:00</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T12:00</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T13:00</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T14:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T15:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T16:00</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T17:00</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T18:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T19:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T20:00</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T21:00</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-08T22:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-08T23:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T00:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T01:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T02:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T03:00</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T04:00</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T05:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T06:00</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T07:00</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T08:00</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T09:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T10:00</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T11:00</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T12:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T13:00</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">4.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T14:00</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">6.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T15:00</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">6.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T16:00</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T17:00</td>
+<td style="text-align: right;">12.6</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T18:00</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T19:00</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T20:00</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T21:00</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-09T22:00</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-09T23:00</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T00:00</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T01:00</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T02:00</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T03:00</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T04:00</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T05:00</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T06:00</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T07:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T08:00</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T09:00</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T10:00</td>
+<td style="text-align: right;">13.4</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T11:00</td>
+<td style="text-align: right;">14.0</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T12:00</td>
+<td style="text-align: right;">14.4</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T13:00</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T14:00</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T15:00</td>
+<td style="text-align: right;">14.4</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T16:00</td>
+<td style="text-align: right;">14.0</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T17:00</td>
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T18:00</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T19:00</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T20:00</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T21:00</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-10T22:00</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-10T23:00</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T00:00</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T01:00</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T02:00</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T03:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T04:00</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T05:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T06:00</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T07:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T08:00</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T09:00</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T10:00</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T11:00</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T12:00</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T13:00</td>
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T14:00</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T15:00</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T16:00</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T17:00</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T18:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T19:00</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T20:00</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T21:00</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-11T22:00</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-11T23:00</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T00:00</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T01:00</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T02:00</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T03:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T04:00</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T05:00</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T06:00</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T07:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T08:00</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T09:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T10:00</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T11:00</td>
+<td style="text-align: right;">13.9</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T12:00</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T13:00</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T14:00</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T15:00</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T16:00</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T17:00</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T18:00</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T19:00</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T20:00</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T21:00</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-03-12T22:00</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-03-12T23:00</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

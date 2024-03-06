@@ -1,0 +1,108 @@
+---
+title: "Librairie olympicsWeather"
+author: "Marie Kerhoas"
+date: "2024-03-03"
+categories: [package, météo, JO]
+image: "Meteo.png"
+---
+
+## Librairie olympicsWeather
+
+### Présentation du package
+
+Le package olympicsWeather a pour objectif d'informer sur les prévisions météo des sites olympiques. La fonction get_forecast comprise à l'intérieur de cette librairie vous permettra de connaître les prévisions, relatives aux températures et à la pluie estimées, à partir d'une adresse ou de coordonnées gps. Ces dernières font référence à des sites olympiques.
+
+### Notice d'installation
+
+Actuellement, la librairie olympicsWeather est stockée sur un dépôt GitHub, aussi afin de l'utiliser, il est nécessaire de l'importer et de l'installer dans votre environnement R. Voici donc les étapes à suivre sur R Studio afin d'y parvenir. Dans un premier temps, il est nécessaire d'avoir installé la librairie "remotes" depuis le CRAN. La seconde étape consiste à utiliser la fonction install_github de "remotes". Elle permet d'installer la librairie olympisWeather depuis le dépôt GitHub sur votre environnement R. Désormais, vous pouvez appeler ce package et l'utiliser à votre guise.
+
+Voici le code à exécuter pour parvenir à cet objectif :
+
+Etape 1 :
+
+```{r}
+#| eval: FALSE
+
+install.packages("remotes")
+```
+
+Etape 2 :
+
+```{r}
+#| eval: FALSE
+
+remotes::install_github("mariekrh/olympicsWeather")
+```
+
+Etape 3 :
+
+```{r}
+library(olympicsWeather)
+```
+
+### Exemples
+
+Quelles sont les prévisions météo à 7 jours pour les lieux suivants ?
+
+-   Stade de France
+
+```{r}
+#| code-fold: true
+#| message: false
+
+SdF <- get_forecast("stade de France")
+
+gridExtra::grid.arrange(SdF$graphs[[1]],SdF$graphs[[2]],SdF$graphs[[3]],ncol = 2)
+```
+
+::: {.callout-note collapse="true"}
+## Les données météo chiffrées du Stade de France
+
+```{r}
+#| code-fold: true
+
+SdF$table
+```
+:::
+
+-   Tahiti
+
+```{r}
+#| code-fold: true
+#| message: false
+
+Tah <- get_forecast("Tahiti")
+
+gridExtra::grid.arrange(Tah$graphs[[1]],Tah$graphs[[2]],Tah$graphs[[3]], ncol = 2)
+```
+
+::: {.callout-note collapse="true"}
+## Les données météo chiffrées de Tahiti
+
+```{r}
+#| code-fold: true
+
+Tah$table
+```
+:::
+
+-   Les coordonnées GPS : 43.276703,5.334791
+
+```{r}
+#| code-fold: true
+#| message: false
+
+coord <- get_forecast(c(43.276703,5.334791))
+
+gridExtra::grid.arrange(coord$graphs[[1]],coord$graphs[[2]],coord$graphs[[3]], ncol = 2)
+```
+
+::: {.callout-note collapse="true"}
+## Les données météo chiffrées des coordonnées : 43.276703,5.334791
+
+```{r}
+#| code-fold: true
+
+coord$table
+```
+:::
