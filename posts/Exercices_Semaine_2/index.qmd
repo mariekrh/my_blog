@@ -1,0 +1,613 @@
+---
+title: "Exercices - Semaine 2"
+author: "Marie Kerhoas"
+date: "2024-03-07"
+categories: [Exercices, Médailles, JO]
+image: "Medaille.jpg"
+code-fold: true
+warning: false
+---
+
+## Exercices - Semaine 2
+
+Dans ce post, vous trouverez la seconde série d'exercices sur R. Celle-ci est réalisée à partir de données issues de la page Wikipédia : liste des médaillés olympiques, et plus précisément celles concernant les jeux d'été et d'hiver par sport.
+
+### Les librairies
+
+```{r}
+library(rvest)
+library(purrr)
+library(tidyverse)
+library(knitr)
+```
+
+### Question 1
+
+Lancez la commande suivante :
+
+```{r}
+#| code-fold: false
+
+list_tables <-
+session("https://fr.wikipedia.org/wiki/Liste_des_m%C3%A9daill%C3%A9s_olympiques") |>
+html_elements(".wikitable") |>
+html_table()
+```
+
+Que s'est-il passé ? Que contient l'objet list_tables ?
+
+La commande ci-dessus nous permet d'accéder à des données issues de la page "Liste des médailles olympiques" de Wikipédia. Plus précisément, l'objet list_table est une liste de 6 tibbles qui sont désormais accessibles.
+
+### Question 2
+
+Préparation initiale de la table des JO d'été.
+
+```{r}
+data_medailles_sport_ete <- list_tables[[1]]
+
+# Supression de la première ligne et de la première colonne
+data_medailles_sport_ete <- data_medailles_sport_ete[-c(1), -c(1)]
+
+
+# Renommage des titres de colonnes
+names(data_medailles_sport_ete) <-
+  c(
+    "Discipline",
+    "Annees",
+    "Editions",
+    "Epreuves_2020",
+    "Or",
+    "Argent",
+    "Bronze",
+    "Total",
+    "Athletes_medailles",
+    "Athletes_or"
+  )
+
+# Changement de format
+data_medailles_sport_ete$Editions <-
+  as.integer(data_medailles_sport_ete$Editions)
+data_medailles_sport_ete$Epreuves_2020 <-
+  as.integer(data_medailles_sport_ete$Epreuves_2020)
+data_medailles_sport_ete$Or <-
+  as.integer(data_medailles_sport_ete$Or)
+data_medailles_sport_ete$Argent <-
+  as.integer(data_medailles_sport_ete$Argent)
+data_medailles_sport_ete$Bronze <-
+  as.integer(data_medailles_sport_ete$Bronze)
+data_medailles_sport_ete$Total <-
+  as.integer(data_medailles_sport_ete$Total)
+
+```
+
+### Question 3
+
+Quelles sont les 3 disciplines avec le plus de médailles distribuées depuis le début de l'histoire des jeux olympiques ?
+
+```{r}
+Trois_Disciplines_Plus_Medailles <- data_medailles_sport_ete |>
+  select(Discipline, Total) |>
+  arrange(desc(Total)) |>
+  head(n = 3)
+kable(Trois_Disciplines_Plus_Medailles)
+```
+
+### Question 4
+
+Quelles sont les 3 disciplines avec le moins d'épreuves en 2020 ?
+
+```{r}
+Trois_Disciplines_Moins_Epreuves <- data_medailles_sport_ete |>
+  group_by(Discipline) |>
+  summarise(Nb_Epreuves = sum (Epreuves_2020)) |>
+  arrange(Nb_Epreuves) |>
+  head(n = 3)
+kable(Trois_Disciplines_Moins_Epreuves)
+```
+
+### Question 5
+
+La colonne Editions nous renseigne sur le nombre total d'apparence des disciplines aux JO d'été. Nous souhaitons vérifier ce calcul en implémentant notre propre fonction calcul_nb_editions_int. Dans un premier temps, la fonction calcul_nb_editions prendra en entrée un paramètre depuis, de type entier, qui représente depuis quelle année la discipline est au programme.
+
+```{r}
+calcul_nb_editions_int <- function(depuis) {
+  Annee_0 <- depuis
+  Annee_0 <- as.integer(Annee_0)
+  Nb_Editions <-
+    1 + (2020 - Annee_0) / 4 # JO tous les 4 ans et 1 édition de + que /4
+  if (Annee_0 <= 1916) {
+    Nb_Editions <- Nb_Editions - 1
+  } # 1 Guerres Mondiales
+  if (Annee_0 <= 1940) {
+    Nb_Editions <- Nb_Editions - 2
+  } # 2 Guerre Mondiale
+  return(Nb_Editions)
+}
+```
+
+```{r}
+#| code-fold: false
+
+calcul_nb_editions_int(2000) 
+```
+
+### Question 6
+
+Dans certains cas, les disciplines ont été au programme de façon discontinue. Proposez une nouvelle fonction calcul_nb_editions_str qui prendra cette fois-ci en entrée des chaînes de caractères.
+
+```{r}
+calcul_nb_editions_str <- function(texte) {
+  Nb_Editions <- 0
+  Annee <-
+    (strsplit(texte, ", ", fixed = TRUE)) # séparation avec la virgule
+  nb_param_annee <- length(Annee[[1]])
+  
+  for (i in 1:nb_param_annee) {
+    if (grepl(pattern = "-", x = Annee[[1]][i]) == "TRUE") {
+      # ex : 1900–1928
+      
+      Annee_diff <- strsplit(Annee[[1]][i], "-", fixed = TRUE)
+      Annee_plus <- as.integer(Annee_diff[[1]][2])
+      Annee_moins <- as.integer(Annee_diff[[1]][1])
+      Nb_Editions <-
+        Nb_Editions + 1 + (Annee_plus - Annee_moins) / 4 # différence
+      if (Annee_moins < 1916 & Annee_plus > 1916) {
+        # GM
+        Nb_Editions <- Nb_Editions - 1
+        if (Annee_plus > 1944) {
+          Nb_Editions <- Nb_Editions - 2
+        }
+      }
+      if (Annee_moins < 1940 &
+          Annee_plus > 1944) {
+        Nb_Editions <- Nb_Editions - 2
+      } # GM
+      
+      
+    } else if (grepl(pattern = "depuis ", x = Annee[[1]][i]) == "TRUE") {
+      # ex : depuis 1936
+      Annee_1 <-
+        strsplit(Annee[[1]][i], "depuis ", fixed = TRUE)[[1]][2]
+      Annee_1 <- as.integer(Annee_1)
+      Nb_Editions <- Nb_Editions + 1 + (2020 - Annee_1) / 4
+      if (Annee_1 <= 1916) {
+        Nb_Editions <- Nb_Editions - 3
+      } # GM
+      if (Annee_1 <= 1940 &
+          Annee_1 > 1916) {
+        Nb_Editions <- Nb_Editions - 2
+      } # GM
+      
+    } else {
+      Nb_Editions <- Nb_Editions + 1
+    } # ex : 1904
+  }
+  return(Nb_Editions)
+}
+```
+
+```{r}
+#| code-fold: false
+
+calcul_nb_editions_str("1896, 1904, depuis 1920")
+```
+
+### Question 7
+
+Définissez une fonction générique calcul_nb_editions et deux implémentations calcul_nb_editions.integer et 'calcul_nb_editions.character.
+
+```{r}
+calcul_nb_editions <- function (param) {
+  if (is.numeric(param)) {
+    calcul_nb_editions_int(param) # méthode si param au format numérique
+  } else if (is.character(param)) {
+    calcul_nb_editions_str(param)
+  } # méthode si param au format texte
+}
+```
+
+```{r}
+#| code-fold: false
+
+calcul_nb_editions(2000)
+calcul_nb_editions("1904-1924, depuis 1948")
+```
+
+### Question 8
+
+Implémentez une fonction calcul_medailles_individuelles qui détermine le nombre de médaille maximal a été obtenu par un athlète lors d'olympiades.
+
+```{r}
+calcul_medailles_individuelles <- function (sportif) {
+  for (i in 1:nrow(data_medailles_sport_ete)) {
+    # liste des athlètes médaillés pour le sport i
+    liste_sportif <-
+      strsplit(data_medailles_sport_ete$Athletes_medailles[i], "\\(|\\)") |>
+      unlist() |>
+      trimws() |>
+      keep( ~ nzchar(.))
+    
+    if (sportif %in% liste_sportif) {
+      # comparaison entre le nom entré de la fonction et la liste
+      position <- which(liste_sportif == sportif) + 2
+      nb_medailles <-
+        strsplit(liste_sportif[position], "-")[[1]] |>
+        as.integer() |>
+        sum () # somme des différentes médailles (or, argent et bronze)
+      return(nb_medailles)
+    }
+  }
+}
+```
+
+```{r}
+#| code-fold: false
+
+calcul_medailles_individuelles("Zbigniew Pietrzykowski")
+calcul_medailles_individuelles("Paavo Nurmi")
+```
+
+### Question 9
+
+Quel est le top 3 des athlètes ? Vous utiliserez la fonction lapply pour appliquer la fonction calcul_medailles_individuelles à chaque élément de la colonne Athletes_medailles.
+
+```{r}
+liste_sportif_entiere <- list()
+
+for (i in 1:nrow(data_medailles_sport_ete)) {
+  # liste de tous les noms de sportifs
+  liste_sportif_construction <-
+    strsplit(data_medailles_sport_ete$Athletes_medailles[i], "\\(|\\)") |> 
+    # séparation
+    unlist() |>
+    trimws() |>
+    keep( ~ nzchar(.))
+  liste_sportif_construction <- liste_sportif_construction |>
+    split(rep(1:(length(
+      liste_sportif_construction
+    ) / 3), each = 3)) # groupement par 3 : nom, nationalité et médailles
+  for (valeur in liste_sportif_construction) {
+    liste_sportif_entiere <-
+      c(liste_sportif_entiere, valeur[[1]]) # sélection du nom
+  }
+}
+
+liste_sportif_entiere <- liste_sportif_entiere |> unlist()
+
+
+nom <- list()
+nb_medaille <- list()
+
+for (s in liste_sportif_entiere) {
+  # regroupement des noms et nombres de médailles dans 2 liste
+  med <- lapply(s, calcul_medailles_individuelles)
+  nom <- c(nom, s)
+  nb_medaille <- c(nb_medaille, med)
+}
+
+data_medailles <-
+  data.frame(Nom_Sportif = unlist(nom),
+             # data frame synthétique des noms et nombres de médailles
+             Nombre_medailles = unlist(nb_medaille))
+
+Top3_athlete <- data_medailles |>
+  arrange(desc(Nombre_medailles)) |>
+  head (n = 3) 
+
+kable(Top3_athlete)
+```
+
+### Question 10
+
+Quels sont les 3 nationalités les plus représentées, pour toutes les épreuves, au classement du nombre de médailles d'or individuelles reccueillies ?
+
+```{r}
+liste_nat_entiere <- list()
+
+for (i in 1:nrow(data_medailles_sport_ete)) {
+  # liste de toutes les nationalités répertoriées
+  liste_nat_construction <-
+    strsplit(data_medailles_sport_ete$Athletes_or[i], "\\(|\\)") |> 
+    # pour les médailles d'or
+    unlist() |>
+    trimws() |>
+    keep( ~ nzchar(.))
+  if (is.na(liste_nat_construction[2]) == FALSE) {
+    # valeur aberrante ligne 11 écartée
+    liste_nat_construction <- liste_nat_construction |>
+      split(rep(1:(length(
+        liste_nat_construction
+      ) / 3), each = 3))
+    for (valeur in liste_nat_construction) {
+      liste_nat_entiere <-
+        c(liste_nat_entiere, valeur[[2]]) # sélection des nationalités
+    }
+  }
+}
+
+liste_nat_entiere <-
+  liste_nat_entiere |>  # suppression des répétitions
+  unlist() |>
+  unique()
+
+
+extraire_nationalite_athlete <- function(chaine) {
+  sortie <- list()
+  for (nat in liste_nat_entiere) {
+    # parmi toutes les nationalités
+    test <-
+      grepl(pattern = nat, x = chaine) 
+    # test de la présence de la nationalité n dans la chaine
+    if (test == "TRUE") {
+      resultat <- gregexpr(nat, chaine)
+      nb_apparitions <-
+        sum(attr(resultat[[1]], "match.length") > 0) # somme des apparitions
+      sortie <- c(sortie, (paste(nat, ":", nb_apparitions)))
+    }
+  }
+  sortie <- sortie |> unlist()
+  return(paste(sortie, collapse = " , "))
+}
+# extraire_nationalite_athlete("Paavo Nurmi (FIN) (9-3-0) Carl Lewis (USA) (9-1-0)") # "FIN : 1 , USA : 1"
+
+
+nat_2020_sport <-
+  lapply(data_medailles_sport_ete$Athletes_or,
+         extraire_nationalite_athlete) |>
+  unlist() # pour toute la colonne
+
+
+nat <- list()
+nb_or <- list()
+
+for (n in seq_along(liste_nat_entiere)) {
+  # aggrégation des résultats
+  
+  nb_nat_2020 <- 0
+  
+  for (s in nat_2020_sport) {
+    if (grepl(pattern = liste_nat_entiere[n], x = s) == "TRUE") {
+      # si pour le sport s il y a la nationalité n
+      liste_sport <- strsplit(s, " ")[[1]]
+      position <-
+        which(liste_sport == liste_nat_entiere[n]) + 2 # la position du nb de sportifs en or
+      nb_nat_2020_inter <- liste_sport[position] |>
+        as.integer()
+      nb_nat_2020 <-
+        nb_nat_2020 + nb_nat_2020_inter # ajout de la valeur à celle précédente
+    }
+  }
+  
+  nat <- c(nat, liste_nat_entiere[n])
+  nb_or <- c(nb_or, nb_nat_2020)
+}
+
+data_medailles_or <-
+  data.frame(Nationalite = unlist(nat),
+             # data frame synthétique du nombre d'athlètes en or par nationalité
+             Nombre_athletes_or = unlist(nb_or))
+
+Top3_nat <- data_medailles_or |>
+  arrange(desc(Nombre_athletes_or)) |>
+  head (n = 3)
+
+kable(Top3_nat)
+```
+
+### Question 11
+
+Intéressez-vous désormais au deuxième tableau contenu dans list_tables, faisant référence aux JO d'hiver. Appliquez les fonctions calcul_medailles_individuelles et extraire_nationalite_athlete aux deux dernières colonnes, à la manière des questions 9 et 10. Cette fois-ci, vous utiliserez la fonction appropriée du package purrr en lieu et place de lapply. Quelles sont les résultats ?
+
+Nettoyage des données
+
+```{r}
+data_medailles_sport_hiver <- list_tables[[2]]
+
+# Modifications de départ
+data_medailles_sport_hiver <-
+  data_medailles_sport_hiver[-c(1), -c(1)]
+
+names(data_medailles_sport_hiver) <-
+  c(
+    "Discipline",
+    "Annees",
+    "Editions",
+    "Epreuves_2020",
+    "Or",
+    "Argent",
+    "Bronze",
+    "Total",
+    "Athletes_medailles",
+    "Athletes_or"
+  )
+
+data_medailles_sport_hiver$Editions <-
+  as.integer(data_medailles_sport_hiver$Editions)
+data_medailles_sport_hiver$Epreuves_2020 <-
+  as.integer(data_medailles_sport_hiver$Epreuves_2020)
+data_medailles_sport_hiver$Or <-
+  as.integer(data_medailles_sport_hiver$Or)
+data_medailles_sport_hiver$Argent <-
+  as.integer(data_medailles_sport_hiver$Argent)
+data_medailles_sport_hiver$Bronze <-
+  as.integer(data_medailles_sport_hiver$Bronze)
+data_medailles_sport_hiver$Total <-
+  as.integer(data_medailles_sport_hiver$Total)
+
+data_medailles_sport_hiver$Athletes_medailles[9] <- "Viktor Ahn (KOR / RUS) (6-0-2) Apolo Anton Ohno (USA) (2-2-4) Arianna Fontana (ITA) (1-2-5)"
+data_medailles_sport_hiver$Athletes_or[9] <- "Viktor Ahn (KOR / RUS) (6-0-2)"
+
+```
+
+Question 9 : Quel est le top 3 des athlètes ?
+
+```{r}
+
+# liste des athlètes médaillés d'hiver
+liste_sportif_entiere_hiver <- list()
+
+for (i in 1:nrow(data_medailles_sport_hiver)) {
+  # liste de tous les noms de sportifs
+  liste_sportif_construction_hiver <-
+    strsplit(data_medailles_sport_hiver$Athletes_medailles[i], "\\(|\\)") |> 
+    # séparation
+    unlist() |>
+    trimws() |>
+    keep( ~ nzchar(.))
+  liste_sportif_construction_hiver <- liste_sportif_construction_hiver |>
+    split(rep(1:(length(
+      liste_sportif_construction_hiver
+    ) / 3), each = 3)) # groupement par 3 : nom, nationalité et médailles
+  for (valeur in liste_sportif_construction_hiver) {
+    liste_sportif_entiere_hiver <-
+      c(liste_sportif_entiere_hiver, valeur[[1]]) # sélection du nom
+  }
+}
+
+liste_sportif_entiere_hiver <- liste_sportif_entiere_hiver |> unlist()
+
+# fonction calculant le nombre de médailles pour 1 athlète
+calcul_medailles_individuelles_hiver <- function (sportif) {
+  for (i in 1:nrow(data_medailles_sport_hiver)) {
+    # liste des athlètes médaillés pour le sport i
+    liste_sportif_hiver <-
+      strsplit(data_medailles_sport_hiver$Athletes_medailles[i], "\\(|\\)") |>
+      unlist() |>
+      trimws() |>
+      keep( ~ nzchar(.))
+    
+    if (sportif %in% liste_sportif_hiver) {
+      # comparaison entre le nom entré de la fonction et la liste
+      position <- which(liste_sportif_hiver == sportif) + 2
+      nb_medailles <-
+        strsplit(liste_sportif_hiver[position], "-")[[1]] |>
+        as.integer() |>
+        sum () # somme des différentes médailles (or, argent et bronze)
+      return(nb_medailles)
+    }
+  }
+}
+
+# application de la fonction à l'ensemble des athlètes
+nom_hiver <- list()
+nb_medaille_hiver <- list()
+
+for (s in liste_sportif_entiere_hiver) {
+  # regroupement des noms et nombres de médailles dans 2 liste
+  med <- map(s, calcul_medailles_individuelles_hiver)
+  nom_hiver <- c(nom_hiver, s)
+  nb_medaille_hiver <- c(nb_medaille_hiver, med)
+}
+
+# Création d'un dataframe synthétique
+data_medailles_hiver <-
+  data.frame(Nom_Sportif = unlist(nom_hiver),
+             # data frame synthétique des noms et nombres de médailles
+             Nombre_medailles = unlist(nb_medaille_hiver))
+
+# Top 3
+Top3_athlete_hiver <- data_medailles_hiver |>
+  arrange(desc(Nombre_medailles)) |>
+  head (n = 3)
+
+kable(Top3_athlete_hiver)
+```
+
+Question 10 : Quels sont les 3 nationalités les plus représentées ?
+
+```{r}
+liste_nat_entiere_hiver <- list()
+
+for (i in 1:nrow(data_medailles_sport_hiver)) {
+  # liste de toutes les nationalités répertoriées
+  liste_nat_construction_hiver <-
+    strsplit(data_medailles_sport_hiver$Athletes_or[i], "\\(|\\)") |> 
+    # pour les médailles d'or
+    unlist() |>
+    trimws() |>
+    keep( ~ nzchar(.))
+  
+    liste_nat_construction_hiver <- liste_nat_construction_hiver |>
+      split(rep(1:(length(
+        liste_nat_construction_hiver
+      ) / 3), each = 3))
+    
+    for (valeur in liste_nat_construction_hiver) {
+      liste_nat_entiere_hiver <-
+        c(liste_nat_entiere_hiver, valeur[[2]]) # sélection des nationalités
+    }
+}
+
+liste_nat_entiere_hiver <-
+  liste_nat_entiere_hiver |>  # suppression des répétitions
+  unlist() |>
+  unique()
+
+
+extraire_nationalite_athlete_hiver <- function(chaine) {
+  sortie <- list()
+  for (nat in liste_nat_entiere_hiver) {
+    # parmi toutes les nationalités
+    test <-
+      grepl(pattern = nat, x = chaine) 
+    # test de la présence de la nationalité n dans la chaine
+    if (test == "TRUE") {
+      resultat <- gregexpr(nat, chaine)
+      nb_apparitions <-
+        sum(attr(resultat[[1]], "match.length") > 0) # somme des apparitions
+      sortie <- c(sortie, (paste(nat, ":", nb_apparitions)))
+    }
+  }
+  sortie <- sortie |> unlist()
+  return(paste(sortie, collapse = " , "))
+}
+# extraire_nationalite_athlete_hiver("Kevin Kuske (GER) (4-1-0) André Lange (GER) (4-1-0)") 
+# "GER : 2"
+
+
+nat_2020_sport_hiver <-
+  map(data_medailles_sport_hiver$Athletes_or,
+         extraire_nationalite_athlete_hiver) |>
+  unlist() # pour toute la colonne
+
+
+nat_hiver <- list()
+nb_or_hiver <- list()
+
+for (n in seq_along(liste_nat_entiere_hiver)) {
+  # aggrégation des résultats
+  
+  nb_nat_2020_hiver <- 0
+  
+  for (s in nat_2020_sport_hiver) {
+    if (grepl(pattern = liste_nat_entiere_hiver[n], x = s) == "TRUE") {
+      # si pour le sport s il y a la nationalité n
+      liste_sport_hiver <- strsplit(s, " , ")[[1]]
+      for (n_s in seq_along(liste_sport_hiver)) {
+        if (grepl(pattern = liste_nat_entiere_hiver[n],
+                  x = liste_sport_hiver[n_s]) == "TRUE") {
+          liste_sport_inter_hiver <- strsplit(liste_sport_hiver[n_s], " : ")[[1]]
+          nb_nat_2020_inter_hiver <- liste_sport_inter_hiver[2] |>
+                                     as.integer()
+          nb_nat_2020_hiver <- nb_nat_2020_hiver + nb_nat_2020_inter_hiver 
+          # ajout de la valeur à celle précédente
+        }
+      }
+    } 
+  }
+  
+  nat_hiver <- c(nat_hiver, liste_nat_entiere_hiver[n])
+  nb_or_hiver <- c(nb_or_hiver, nb_nat_2020_hiver)
+}
+
+data_medailles_or_hiver <-
+  data.frame(Nationalite = unlist(nat_hiver),
+             # data frame synthétique du nombre d'athlètes en or par nationalité
+             Nombre_athletes_or = unlist(nb_or_hiver))
+
+Top3_nat_hiver <- data_medailles_or_hiver |>
+  arrange(desc(Nombre_athletes_or)) |>
+  head (n = 3)
+
+kable(Top3_nat_hiver)
+```

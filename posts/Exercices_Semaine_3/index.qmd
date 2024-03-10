@@ -1,0 +1,307 @@
+---
+title: "Exercices - Semaine 3"
+author: "Marie Kerhoas"
+date: "2024-03-08"
+categories: [Exercices, Athlètes, JO]
+image: "Sportifs.jpg"
+code-fold: true
+warning: false
+---
+
+## Exercices - Semaine 3
+
+Dans ce post vous trouverez la troisième série d'exercices sur R. Celle-ci est réalisée à partir d'une base de données SQL et de 2 fichiers comprenant des informations sur les athlètes olympiques.
+
+### Les librairies
+
+```{r}
+library(stringr)
+library(lubridate)
+library(dplyr)
+library(tidyr)
+library(arrow)
+library(jsonlite)
+library(RSQLite)
+library(knitr)
+```
+
+### Question 1
+
+Listez les fichiers présents dans le dossier data. Quelles sont les extensions des différents fichiers ?
+
+```{r}
+list.files("data/")
+```
+
+Les extensions des fichiers sont : .sqlite, .json et .parquet.
+
+### Question 2
+
+Lisez le fichier .parquet en utilisant la librairie arrow.
+
+```{r}
+tokyo_athletes <- arrow::read_parquet("data/tokyo_athletes.parquet")
+```
+
+Quelles sont les dimensions de la table ? (lignes, colonnes)
+
+```{r}
+dim(tokyo_athletes)
+```
+
+Quelles sont les colonnes présentes ?
+
+```{r}
+colnames(tokyo_athletes)
+```
+
+### Question 3
+
+Lisez le fichier .json en utilisant la librairie jsonlite.
+
+```{r}
+olympics_athletes <-
+  read_json("data/olympics_athletes.json", simplifyVector = T)
+```
+
+Quelles sont les dimensions de la table ? (lignes, colonnes)
+
+```{r}
+dim(olympics_athletes)
+```
+
+Quelles sont les colonnes présentes ?
+
+```{r}
+colnames(olympics_athletes)
+```
+
+### Question 4
+
+Importez la librairie RSQLite, et ouvrez une connexion à la base de données sqlite en utilisant la fonction dbConnect.
+
+```{r}
+con <- dbConnect(RSQLite::SQLite(), dbname = "data/data.sqlite")
+```
+
+Quelles sont les tables présentes dans la table ?
+
+```{r}
+dbListTables(con)
+```
+
+### Question 5
+
+Créez deux nouvelles tables dans la base de données à l'aide de la fonction dbWriteTable. Les tables s'appeleront respectivement olympics_athletes et tokyo_athletes pour les fichiers olympics_athletes.json et tokyo_athletes.parquet.
+
+```{r}
+dbWriteTable(con, "tokyo_athletes", tokyo_athletes)
+dbWriteTable(con, "olympics_athletes", olympics_athletes)
+dbListTables(con)
+```
+
+Désormais 4 tables sont présentes dans la base de données.
+
+### Question 6
+
+Inspectez la table olympics_athletes en utilisant la fonction dbListFields. Quelles sont les colonnes de la table ?
+
+```{r}
+dbListFields(con, "olympics_athletes")
+```
+
+### Question 7
+
+Importez cette table depuis la base de données en utilisant la fonction dbReadTable. Convertissez la table en tibble en utilisant la fonction as_tibble.
+
+```{r}
+olympics_athletes <-
+  dbReadTable(con, "olympics_athletes") |> as_tibble()
+```
+
+### Question 8
+
+Convertissez la colonne Sex en variable catégorielle avec la fonction mutate.
+
+```{r}
+olympics_athletes <- olympics_athletes |>
+  mutate(Sex = recode(Sex, "F" = "Femme", "M" = "Homme"))
+
+str(olympics_athletes$Sex)
+```
+
+### Question 9
+
+Créez deux colonnes à partir de la colonne Games. La première colonne Year sera une colonne de type integer contenant l'année des jeux. La deuxième colonne isSummer sera une colonne booléenne qui indiquera si les jeux sont des jeux d'été ou d'hiver.
+
+```{r}
+olympics_athletes <- olympics_athletes |>
+  separate_wider_delim (Games, delim = " ", names = c("Year", "isSummer"))
+
+str(olympics_athletes$Year)
+str(olympics_athletes$isSummer)
+```
+
+### Question 10
+
+Calculez la moyenne d'age des athletes pour chacune des éditions des JO d'été. Quelle édition a compté les athlètes les plus jeunes ?
+
+```{r}
+olympics_athletes |> group_by(Year) |>
+  summarise(moyenne_age = mean(Age, na.rm = TRUE)) |>
+  arrange(moyenne_age) |>
+  mutate(moyenne_age = round(moyenne_age)) |> 
+  head(n = 1) |> 
+  kable()
+```
+
+Les plus vieux ?
+
+```{r}
+olympics_athletes |> group_by(Year) |>
+  summarise(moyenne_age = mean(Age, na.rm = TRUE)) |>
+  arrange(desc(moyenne_age)) |>
+  mutate(moyenne_age = round(moyenne_age)) |> 
+  head(n = 1) |> 
+  kable()
+```
+
+### Question 11
+
+Quelle est la discipline des JO d'été dont la taille des athlètes féminines est la plus grande ? (en cm)
+
+```{r}
+olympics_athletes |> filter(Sex == "Femme", Height >= 0) |>
+  group_by(Sport) |>
+  summarise(max_taille = max(Height, na.rm = TRUE)) |>
+  arrange (desc(max_taille)) |>
+  head(n = 1) |> 
+  kable()
+```
+
+Quelle a été cette discipline au cours de chacune des éditions ?
+
+```{r}
+olympics_athletes |>  filter(Sex == "Femme", Height >= 0) |>
+  group_by(Year) |>
+  summarise(max_taille = max(Height, na.rm = TRUE),
+            Sport = Sport[which.max(Height)]) |>
+  arrange(desc(Year)) |> 
+  kable()
+```
+
+Calculez le nombre de fois où chaque discipline a été la discipline avec les plus grandes athlètes
+
+```{r}
+olympics_athletes |>  filter(Sex == "Femme", Height >= 0) |>
+  group_by(Year) |>
+  summarise(max_taille = max(Height, na.rm = TRUE),
+            Sport = Sport[which.max(Height)]) |>
+  group_by(Sport) |>
+  summarise(nb = n()) |>
+  arrange(desc(nb)) |> 
+  kable()
+```
+
+### Question 12
+
+Vous disposez du texte suivant : Les jeux olympiques d'été se déroulent normalement tous les 4 ans, durant les mois de Juillet et Août. Les jeux de Rio ont eu lieu du 5 Août 2016 au 20 Août 2016, ceux de Tokyo du 23 Juillet 2021 au 8 Août 2021, et ceux de Paris auront lieu du 26 Juillet 2024 au 11 Août 2024. Plus de 10000 athlètes sont attendus du monde entier à Paris.
+
+En utilisant les fonctions du packages stringr, extrayez les dates des différentes éditions des JO. Aide : définissez une expression régulière capable de capturer une séquence de caractères représentant une date telle que "26 Juillet 2024".
+
+```{r}
+texte <-
+  "Les jeux olympiques d’été se déroulent normalement tous les 4 ans, durant les mois
+de Juillet et Août. Les jeux de Rio ont eu lieu du 5 Août 2016 au 20 Août 2016,
+ceux de Tokyo du 23 Juillet 2021 au 8 Août 2021, et ceux de Paris auront lieu du
+26 Juillet 2024 au 11 Août 2024. Plus de 10000 athlètes sont attendus du monde
+entier à Paris."
+
+dates_JO <- str_extract_all(texte, "\\d+ \\w+ \\d+") |> unlist()
+```
+
+### Question 13
+
+Remplacez les noms des mois par leur numéro pour rendre ces éléments convertibles en date.
+
+```{r}
+dates_JO[c(1, 2, 4, 6)] <-
+  str_replace(dates_JO[c(1, 2, 4, 6)], "Août", "08")
+dates_JO[c(3, 5)] <- str_replace(dates_JO[c(3, 5)], "Juillet", "07")
+
+dates_JO
+```
+
+### Question 14
+
+Convertissez ces 3 éléments en date en utilisant la fonction appropriée du package lubridate.
+
+```{r}
+Debut_2016 <- dmy(dates_JO[1]) 
+Fin_2016 <- dmy(dates_JO[2]) 
+
+Debut_2021 <- dmy(dates_JO[3]) 
+Fin_2021 <- dmy(dates_JO[4]) 
+
+Debut_2024 <- dmy(dates_JO[5])
+Fin_2024 <- dmy(dates_JO[6])
+```
+
+```{r}
+#| code-fold: false
+
+Debut_2016
+Fin_2016
+Debut_2021
+Fin_2021
+Debut_2024 
+Fin_2024
+```
+
+### Question 15
+
+Combien de jours ont séparés les éditions de Rio et Tokyo ?
+
+```{r}
+Rio_Tokyo_d <- interval(Fin_2016, Debut_2021) |>
+  as.numeric("days") |>
+  print()
+```
+
+Et sépareront les éditions de Tokyo et de Paris ?
+
+```{r}
+Tokyo_Paris_d <- interval(Fin_2021, Debut_2024) |>
+  as.numeric("days") |>
+  print()
+```
+
+Faites le même calcul en semaines.
+
+Rio et Tokyo :
+
+```{r}
+Rio_Tokyo_s <- interval(Fin_2016, Debut_2021) |>
+  as.numeric("weeks") |>
+  round(0) |> 
+  print()
+```
+
+Tokyo et Paris :
+
+```{r}
+Tokyo_Paris_s <- interval(Fin_2021, Debut_2024) |>
+  as.numeric("weeks") |>
+  round(0) |> 
+  print()
+```
+
+### Fin
+
+Suppression des tables ajoutées à la base de données et déconnexion
+
+```{r}
+dbRemoveTable(con, "tokyo_athletes")
+dbRemoveTable(con, "olympics_athletes")
+dbDisconnect(con)
+```

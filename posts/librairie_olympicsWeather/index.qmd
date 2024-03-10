@@ -2,7 +2,7 @@
 title: "Librairie olympicsWeather"
 author: "Marie Kerhoas"
 date: "2024-03-03"
-categories: [package, météo, JO]
+categories: [Package, Météo, JO]
 image: "Meteo.png"
 ---
 

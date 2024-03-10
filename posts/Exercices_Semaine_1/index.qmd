@@ -1,0 +1,300 @@
+---
+title: "Exercices - Semaine 1"
+author: "Marie Kerhoas"
+date: "2024-03-06"
+categories: [Exercices, Paris_2024, JO]
+image: "Paris_JO.png"
+code-fold: true
+warning: false
+---
+
+## Exercices - Semaine 1
+
+Dans ce post, vous trouverez la première série d'exercices sur R. Celle-ci est réalisée à partir d'un fichier répertoriant les sites olympiques des JO de Paris 2024.
+
+### Les libraries
+
+```{r}
+library(utils)
+library(tidygeocoder)
+library(geosphere)
+```
+
+### Question 2
+
+Lisez le fichier téléchargé.
+
+```{r}
+path <- "paris_2024.csv"
+data_ex <- read.table(path,
+                      sep = ";",
+                      header = TRUE,
+                      quote = "\"")
+```
+
+Quels sont les noms et la nature des colonnes ?
+
+```{r}
+class_data_ex <- sapply(data_ex, class)
+paste(names(class_data_ex), class_data_ex, sep = ": ") |> print()
+
+```
+
+Combien de lignes contient la data.frame ?
+
+```{r}
+r <- nrow(data_ex)
+r
+```
+
+### Question 3
+
+Combien y a t'il de sites olympiques ?
+
+```{r}
+# liste des sites où "olympique" est présent dans la colonne 3
+nb_sites_olympiques <- 0
+
+for (i in 1:r) {
+  test <-
+    grepl(pattern = "olympique",
+          x = data_ex$sites_olympiques_paralympiques[i])
+  if (test == "TRUE") {
+    nb_sites_olympiques <- nb_sites_olympiques + 1
+  }
+}
+
+print(nb_sites_olympiques)
+```
+
+### Question 4
+
+Combien y a t'il de sites paralympiques ?
+
+```{r}
+# liste des sites où "paralympique" est présent dans la colonne 3
+nb_sites_paralympiques <- 0
+
+for (i in 1:r) {
+  test <-
+    grepl(pattern = "paralympique",
+          x = data_ex$sites_olympiques_paralympiques[i])
+  if (test == "TRUE") {
+    nb_sites_paralympiques <- nb_sites_paralympiques + 1
+  }
+}
+
+print(nb_sites_paralympiques)
+```
+
+### Question 5
+
+Quels sont les sites qui accueillent plusieurs disciplines sportives ?
+
+```{r}
+sports_diff <- strsplit(data_ex$sport, "[,]")
+
+# nombre de sports par lieu
+nb_sports <- numeric(r)
+for (k in 1:r) {
+  nb <- 0
+  for (i in sports_diff[[k]]) {
+    nb <- nb + 1
+  }
+  nb_sports[[k]] <- nb
+} 
+
+# nom des lieux où les épreuves de plusieurs sports se déroulent
+for (i in 1:r) {
+  if (nb_sports[i] >= 2) {
+    print (data_ex$nom[i])
+  }
+}
+
+```
+
+### Question 6
+
+Quels sont les disciplines para-olympiques accueillies dans ces sites franciliens ?
+
+```{r}
+# Nombre de sports,plusieurs fois les mêmes (70)
+nb_total_sports <- 0
+for (i in 1:r) {
+  nb_total_sports <- nb_total_sports + nb_sports[i]
+}
+
+# Noms des 70 sports
+total_sports <- numeric(nb_total_sports)
+s <- 0
+for (k in 1:r) {
+  for (i in sports_diff[[k]]) {
+    s <- s + 1
+    total_sports[[k + s - 1]] <- i
+  }
+  s <- s - 1
+}
+
+# Noms des sports par ordre alphabétique
+total_sports_bis <- sort(total_sports)
+
+# Nombre de sports différents (60)
+total_sports_fini <- numeric(60)
+total_sports_fini[1] <- total_sports_bis[1]
+sf <- 2
+for (i in 2:nb_total_sports) {
+  if (total_sports_bis[i] != total_sports_bis[i - 1]) {
+    total_sports_fini[sf] <- total_sports_bis[i]
+    sf <- sf + 1
+  }
+}
+
+# Noms des sports paralympiques (21)
+total_sports_para <- numeric(21)
+sp <- 1
+for (i in 1:60) {
+  for (j in c("Para", "fauteuil", "assis", "Goalball", "Boccia", "Cécifoot")) {
+    test <- grepl(pattern = j, x = total_sports_fini[i])
+    if (test == "TRUE") {
+      total_sports_para[sp] <- total_sports_fini[i]
+      sp <- sp + 1
+    }
+  }
+}
+total_sports_para
+```
+
+### Question 7
+
+Quel(s) site(s) accueille(nt) le plus de disciplines différentes ?
+
+```{r}
+max_sport <- max(nb_sports)
+
+for (i in 1:r) {
+  if (nb_sports[i] == max_sport) {
+    print (data_ex$nom[i])
+  }
+}
+```
+
+### Question 8
+
+Quel discipline aura lieu sur le plus grand nombre de sites ?
+
+```{r}
+nb_lieux_par_sport <- numeric(60)
+for (s in 1:60) {
+  presence <- 0
+  for (l in 1:r) {
+    test <- grepl(pattern = total_sports_fini[s], x = data_ex$sports[l])
+    if (test == "TRUE") {
+      presence <- presence + 1
+    }
+    nb_lieux_par_sport[s] <- presence
+  }
+}
+
+max_lieu_par_sport <- max(nb_lieux_par_sport)
+
+for (i in 1:60) {
+  if (nb_lieux_par_sport[i] == max_lieu_par_sport) {
+    print (total_sports_fini[i])
+  }
+}
+```
+
+Quels sont ces sites ?
+
+```{r}
+for (l in 1:r) {
+  test <- grepl(pattern = "Athlétisme", x = data_ex$sports[l])
+  if (test == "TRUE") {
+    print(data_ex$nom[l])
+  }
+}
+```
+
+### Question 9
+
+A vol d'oiseau, quels sont les sites les deux sites les plus proches ?
+
+```{r}
+
+# Création de 2 colonnes : lat et long
+coord_diff <- strsplit(data_ex$geo_point, "[,]")
+
+for (i in 1:r) {
+  data_ex$lat[i] <- coord_diff[[i]][1]
+  data_ex$long[i] <- coord_diff[[i]][2]
+}
+
+data_ex$lat <- as.numeric(data_ex$lat)
+data_ex$long <- as.numeric(data_ex$long)
+
+# Matrice des distances 
+distance <- matrix(nrow = r, ncol = r)
+for (i in 1:r) {
+  for (j in 1:r) {
+    if (i < j) {
+      distance[i, j] <-
+        distHaversine(c(data_ex$long[i], data_ex$lat[i]),
+                      c(data_ex$long[j], data_ex$lat[j]))
+    }
+  }
+}
+
+# 2 sites à la distance min
+min_dist <- min(distance, na.rm = TRUE) 
+
+site_min_1 <- 0
+site_min_2 <- 0
+
+for (i in 1:r) {
+  for (j in i:r) {
+    if (distHaversine(c(data_ex$long[i], data_ex$lat[i]),
+                      c(data_ex$long[j], data_ex$lat[j])) == min_dist) {
+      site_min_1 <- i
+      site_min_2 <- j
+    }
+  }
+}
+
+data_ex$nom[site_min_1] 
+data_ex$nom[site_min_2] 
+```
+
+### Question 10
+
+Quels sont les deux sites les plus éloignés ?
+
+```{r}
+max_dist <- max(distance, na.rm = TRUE) 
+
+site_max_1 <- 0
+site_max_2 <- 0
+
+for (i in 1:r) {
+  for (j in i:r) {
+    if (distHaversine(c(data_ex$long[i], data_ex$lat[i]),
+                      c(data_ex$long[j], data_ex$lat[j])) == max_dist) {
+      site_max_1 <- i
+      site_max_2 <- j
+    }
+  }
+}
+
+data_ex$nom[site_max_1] 
+data_ex$nom[site_max_2] 
+```
+
+### Question 11
+
+Vous êtes un heureux millionaire et souhaitez investir dans un bien immobilier. Vous décidez d'acheter un appartement situé au barycentre de l'ensemble des sites olympiques.Où se situe cet appartement ?
+
+```{r}
+m_long <- mean(data_ex$long)
+m_lat <- mean(data_ex$lat)
+
+reverse_geo(m_lat, m_long)$address
+```

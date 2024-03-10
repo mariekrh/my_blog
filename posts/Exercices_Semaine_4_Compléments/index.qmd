@@ -1,0 +1,52 @@
+---
+title: "Exercices - Semaine 4 : Compléments"
+author: "Marie Kerhoas"
+date: "2024-03-09"
+categories: [Exercices, Météo, JO]
+image: "Meteo.png"
+code-fold: true
+warning: false
+---
+
+## Exercices - Semaine 4 : Compléments
+
+Dans ce post, vous trouverez les compléments de réponses à la quatrième série d'exercices sur R aboutissant à la librairie olympicsWeather.
+
+### Question 2
+
+Dans une nouvelle session R, créer un nouveau projet de package intitulé olympicsWeather en utilisant la fonction create_package de la librairie usethis. Pourquoi n'est-il pas nécessaire d'installer explicitement usethis ?
+
+Nous avons déjà installé devtools, or usethis est inclus dans ce package, il n'est donc pas nécessaire de l'installer explicitement.
+
+### Question 4
+
+Sans implémenter la fonction pour l'instant, écrivez une requête d'api. Nous souhaitons obtenir les informations de températures, de températures ressenties,de probabilité de précipitation, et de quantités de précipitations en mm, aux coordonnées géographiques c(48.85, 2.35).
+
+```{r}
+
+url <- "https://api.open-meteo.com/v1/forecast"
+
+httr2::request(url) |>
+  httr2::req_url_query(
+    latitude = 48.85,
+    longitude = 2.35,
+    hourly = c(
+      "temperature_2m",
+      "apparent_temperature",
+      "precipitation_probability",
+      "precipitation"
+    ),
+    .multi = "comma"
+  ) |>
+  httr2::req_perform() |>
+  httr2::resp_body_json() |>
+  tibble::as.tibble() |>
+  print()
+
+```
+
+### Question 5
+
+Décrivez le résultat. Qu'avons-nous obtenu suite à notre requête ? Quels paramètres souhaitons-nous changer si nous voulons pouvoir récupérer les prévisions météo pour tous les sites des JO ?
+
+Cette requête nous a permis d'obtenir des prévisions météo sur 1 semaine : la température, la température ressentie, la probabilité qu'il pleuve, et la quantité de pluie, pour une latitude et une longitude donnée. Afin de pouvoir récupérer les prévisions météo pour tous les sites des JO, nous devons modifier les coordonnées gps renseignées.

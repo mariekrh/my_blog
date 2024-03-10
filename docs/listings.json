@@ -2,8 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/librairie_olympicsWeather/index.html",
-      "/posts/welcome/index.html"
+      "/posts/Exercices_Semaine_4_Compléments/index.html",
+      "/posts/Exercices_Semaine_3/index.html",
+      "/posts/Exercices_Semaine_2/index.html",
+      "/posts/Exercices_Semaine_1/index.html",
+      "/posts/librairie_olympicsWeather/index.html"
     ]
   }
 ]

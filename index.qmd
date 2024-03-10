@@ -1,5 +1,5 @@
 ---
-title: "my_blog"
+title: "Accueil"
 listing:
   contents: posts
   sort: "date desc"
@@ -11,4 +11,10 @@ page-layout: full
 title-block-banner: true
 ---
 
-Bienvenue
+Bienvenue sur ce blog !
+
+Vous y trouverez l'ensemble du travail d'entraînement que j'ai réalisé dans le cadre du cours de R suivi ce semestre.
+
+La thématique étudiée était celle des Jeux Olympiques.
+
+## Les posts :
